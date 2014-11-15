@@ -1,14 +1,12 @@
-package plugins
+package main
 
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
-func runFn(module, topic, command string) func(ctx *cli.Context) {
-	return func(ctx *cli.Context) {
+func runFn(module, topic, command string) func(ctx *Context) {
+	return func(ctx *Context) {
 		ctxJson, err := json.Marshal(ctx)
 		must(err)
 		script := fmt.Sprintf(`
@@ -22,20 +20,20 @@ func runFn(module, topic, command string) func(ctx *cli.Context) {
 		.run(%s)`, module, topic, command, ctxJson)
 
 		cmd := node.RunScript(script)
-		cmd.Stdout = cli.Stdout
-		cmd.Stderr = cli.Stderr
+		cmd.Stdout = Stdout
+		cmd.Stderr = Stderr
 		must(cmd.Run())
 	}
 }
 
-func getPackageTopics(name string) []*cli.Topic {
+func getPackageTopics(name string) []*Topic {
 	script := `console.log(JSON.stringify(require('` + name + `')))`
 	cmd := node.RunScript(script)
-	cmd.Stderr = cli.Stderr
+	cmd.Stderr = Stderr
 	output, err := cmd.StdoutPipe()
 	must(err)
 	must(cmd.Start())
-	var response map[string][]*cli.Topic
+	var response map[string][]*Topic
 	must(json.NewDecoder(output).Decode(&response))
 	must(cmd.Wait())
 	topics := response["topics"]
@@ -47,7 +45,7 @@ func getPackageTopics(name string) []*cli.Topic {
 	return topics
 }
 
-func PluginTopics() (topics []*cli.Topic) {
+func PluginTopics() (topics []*Topic) {
 	packages, err := node.Packages()
 	must(err)
 	for _, pkg := range packages {

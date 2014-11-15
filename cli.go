@@ -1,4 +1,4 @@
-package cli
+package main
 
 import (
 	"errors"
@@ -9,14 +9,6 @@ var HelpErr = errors.New("help")
 
 type Cli struct {
 	Topics map[string]*Topic
-}
-
-func NewCli(topics ...*Topic) *Cli {
-	cli := &Cli{map[string]*Topic{}}
-	for _, topic := range topics {
-		cli.AddTopic(topic)
-	}
-	return cli
 }
 
 func (cli *Cli) AddTopic(topic *Topic) {

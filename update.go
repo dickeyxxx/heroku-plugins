@@ -12,11 +12,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-
-	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
-var binPath = filepath.Join(cli.AppDir, "heroku-plugins")
+var binPath = filepath.Join(AppDir, "heroku-plugins")
 
 func updateIfNeeded() {
 	// TODO: update plugins
@@ -28,13 +26,13 @@ func updateIfNeeded() {
 		return
 	}
 	if !updatable() {
-		cli.Errf("Out of date: You are running %s but %s is out.\n", Version, manifest.Version)
+		Errf("Out of date: You are running %s but %s is out.\n", Version, manifest.Version)
 		return
 	}
-	cli.Errf("Updating to %s... ", manifest.Version)
+	Errf("Updating to %s... ", manifest.Version)
 	build := manifest.Builds[runtime.GOOS][runtime.GOARCH]
 	update(build.Url, build.Sha1)
-	cli.Errln("done")
+	Errln("done")
 	execBin()
 	os.Exit(0)
 }
@@ -68,7 +66,7 @@ func getUpdateManifest() manifest {
 func updatable() bool {
 	path, err := filepath.Abs(os.Args[0])
 	if err != nil {
-		cli.Errln(err)
+		Errln(err)
 	}
 	return path == binPath
 }

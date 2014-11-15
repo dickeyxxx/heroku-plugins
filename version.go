@@ -3,16 +3,14 @@ package main
 import (
 	"fmt"
 	"runtime"
-
-	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
-var version = &cli.Topic{
+var version = &Topic{
 	Name:      "version",
 	ShortHelp: "print the version",
-	Commands: []*cli.Command{
+	Commands: []*Command{
 		{
-			ShortHelp: "print the version", Run: func(ctx *cli.Context) {
+			ShortHelp: "print the version", Run: func(ctx *Context) {
 				fmt.Printf("heroku-toolbelt/%s (%s-%s) %s\n", Version, runtime.GOARCH, runtime.GOOS, runtime.Version())
 			},
 		},
