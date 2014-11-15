@@ -10,7 +10,8 @@ var version = &Topic{
 	ShortHelp: "print the version",
 	Commands: []*Command{
 		{
-			ShortHelp: "print the version", Run: func(ctx *Context) {
+			ShortHelp: "print the version",
+			Run: func(ctx *Context) {
 				fmt.Printf("heroku-toolbelt/%s (%s-%s) %s\n", Version, runtime.GOARCH, runtime.GOOS, runtime.Version())
 			},
 		},

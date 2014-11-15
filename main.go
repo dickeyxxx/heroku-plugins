@@ -12,11 +12,14 @@ import (
 
 var Version string = "dev"
 
-var cli = &Cli{
-	Topics: map[string]*Topic{
-		"version": version,
-		"plugins": plugins,
-	},
+var cli = &Cli{}
+
+func init() {
+	cli.Topics = map[string]*Topic{
+		"commands": commands,
+		"version":  version,
+		"plugins":  plugins,
+	}
 }
 
 func main() {
