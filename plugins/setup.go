@@ -6,7 +6,7 @@ func Setup() {
 	if node.IsSetup() {
 		return
 	}
-	cli.Err("Setting up plugins... ")
+	cli.Err("setting up plugins... ")
 	must(node.Setup())
 	cli.Errln("done")
 }
