@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/heroku/hk",
+	"ImportPath": "github.com/dickeyxxx/heroku-plugins",
 	"GoVersion": "go1.3.3",
 	"Deps": [
 		{

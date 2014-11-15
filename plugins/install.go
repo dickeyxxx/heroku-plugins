@@ -1,6 +1,6 @@
 package plugins
 
-import "github.com/heroku/hk/cli"
+import "github.com/dickeyxxx/heroku-plugins/cli"
 
 var cmdInstall = &cli.Command{
 	Name:      "install",

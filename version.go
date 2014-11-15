@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/heroku/hk/cli"
+	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
 var version = &cli.Topic{

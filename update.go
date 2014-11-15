@@ -13,10 +13,10 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/heroku/hk/cli"
+	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
-var hkPath = filepath.Join(cli.AppDir, "bin", "hk")
+var binPath = filepath.Join(cli.AppDir, "heroku-plugins")
 
 func updateIfNeeded() {
 	// TODO: update plugins
@@ -35,7 +35,7 @@ func updateIfNeeded() {
 	build := manifest.Builds[runtime.GOOS][runtime.GOARCH]
 	update(build.Url, build.Sha1)
 	cli.Errln("done")
-	execHk()
+	execBin()
 	os.Exit(0)
 }
 
@@ -56,7 +56,7 @@ type manifest struct {
 
 func getUpdateManifest() manifest {
 	channel := "dev"
-	res, err := http.Get("https://d1gvo455cekpjp.cloudfront.net/hk/" + channel + "/manifest.json")
+	res, err := http.Get("https://d1gvo455cekpjp.cloudfront.net/heroku-plugins/" + channel + "/manifest.json")
 	if err != nil {
 		panic(err)
 	}
@@ -70,24 +70,24 @@ func updatable() bool {
 	if err != nil {
 		cli.Errln(err)
 	}
-	return path == hkPath
+	return path == binPath
 }
 
 func update(url, sha1 string) {
-	tmp, err := downloadHk(url)
+	tmp, err := downloadBin(url)
 	if err != nil {
 		panic(err)
 	}
 	if fileSha1(tmp) != sha1 {
 		panic("SHA mismatch")
 	}
-	if err := os.Rename(tmp, hkPath); err != nil {
+	if err := os.Rename(tmp, binPath); err != nil {
 		panic(err)
 	}
 }
 
-func downloadHk(url string) (string, error) {
-	out, err := os.OpenFile(hkPath+"~", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
+func downloadBin(url string) (string, error) {
+	out, err := os.OpenFile(binPath+"~", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		return "", err
 	}
@@ -119,8 +119,8 @@ func fileSha1(path string) string {
 	return fmt.Sprintf("%x", sha1.Sum(data))
 }
 
-func execHk() {
-	cmd := exec.Command(hkPath, os.Args[1:]...)
+func execBin() {
+	cmd := exec.Command(binPath, os.Args[1:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

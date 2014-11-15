@@ -1,6 +1,6 @@
 package plugins
 
-import "github.com/heroku/hk/cli"
+import "github.com/dickeyxxx/heroku-plugins/cli"
 
 var cmdList = &cli.Command{
 	ShortHelp: "Lists the installed plugins",

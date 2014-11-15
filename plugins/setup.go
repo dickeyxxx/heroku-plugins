@@ -1,6 +1,6 @@
 package plugins
 
-import "github.com/heroku/hk/cli"
+import "github.com/dickeyxxx/heroku-plugins/cli"
 
 func Setup() {
 	if node.IsSetup() {

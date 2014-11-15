@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/bgentry/go-netrc/netrc"
-	"github.com/heroku/hk/apps"
-	"github.com/heroku/hk/cli"
-	"github.com/heroku/hk/plugins"
+	"github.com/dickeyxxx/heroku-plugins/apps"
+	"github.com/dickeyxxx/heroku-plugins/cli"
+	"github.com/dickeyxxx/heroku-plugins/plugins"
 )
 
 var Version string = "dev"

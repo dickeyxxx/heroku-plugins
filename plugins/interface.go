@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/heroku/hk/cli"
+	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
 func runFn(module, topic, command string) func(ctx *cli.Context) {

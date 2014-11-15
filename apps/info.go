@@ -2,7 +2,7 @@ package apps
 
 import (
 	"github.com/bgentry/heroku-go"
-	"github.com/heroku/hk/cli"
+	"github.com/dickeyxxx/heroku-plugins/cli"
 	"github.com/pivotal-golang/bytefmt"
 )
 

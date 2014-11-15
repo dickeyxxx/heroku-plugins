@@ -2,7 +2,7 @@ package plugins
 
 import (
 	"github.com/dickeyxxx/gode"
-	"github.com/heroku/hk/cli"
+	"github.com/dickeyxxx/heroku-plugins/cli"
 )
 
 var node = gode.NewClient(cli.AppDir)
