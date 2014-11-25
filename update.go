@@ -49,7 +49,7 @@ func updateNeeded() bool {
 	if err != nil {
 		must(err)
 	}
-	return f.ModTime().Add(20 * time.Minute).Before(time.Now())
+	return f.ModTime().Add(10 * time.Second).Before(time.Now())
 }
 
 type manifest struct {
