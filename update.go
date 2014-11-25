@@ -22,7 +22,6 @@ func updateIfNeeded() {
 		return
 	}
 	// TODO: update plugins
-	Errln("checking for update")
 	manifest := getUpdateManifest()
 	if manifest.Version == Version {
 		// Set timestamp of bin so we don't update again
@@ -49,7 +48,7 @@ func updateNeeded() bool {
 	if err != nil {
 		must(err)
 	}
-	return f.ModTime().Add(10 * time.Second).Before(time.Now())
+	return f.ModTime().Add(20 * time.Minute).Before(time.Now())
 }
 
 type manifest struct {
