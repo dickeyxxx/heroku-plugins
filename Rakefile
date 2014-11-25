@@ -22,6 +22,7 @@ CLOUDFRONT_HOST = 'd1gvo455cekpjp.cloudfront.net'
 
 puts "heroku-plugins: #{VERSION}"
 
+desc "build heroku-plugins"
 task :build do
   FileUtils.mkdir_p 'dist'
   TARGETS.each do |target|
@@ -32,6 +33,7 @@ task :build do
   end
 end
 
+desc "deploy heroku-plugins"
 task :deploy => :build do
   abort 'branch is dirty' if CHANNEL == 'dirty'
   abort "#{CHANNEL} not a channel branch (dev/release)" unless %w(dev release).include?(CHANNEL)
