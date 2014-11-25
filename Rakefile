@@ -115,6 +115,6 @@ end
 def set_manifest(bucket)
   puts 'setting manifest:'
   p manifest
-  upload_string(bucket, JSON.dump(manifest), "heroku-plugins/#{CHANNEL}/manifest.json", content_type: 'application/json', cache_control: "public,max-age=600")
+  upload_string(bucket, JSON.dump(manifest), "heroku-plugins/#{CHANNEL}/manifest.json", content_type: 'application/json', cache_control: "public,max-age=300")
   puts "deployed #{VERSION}"
 end
