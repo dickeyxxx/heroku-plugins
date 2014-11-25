@@ -22,6 +22,7 @@ func updateIfNeeded() {
 		return
 	}
 	// TODO: update plugins
+	fmt.Println("checking for update")
 	manifest := getUpdateManifest()
 	if manifest.Version == Version {
 		// Set timestamp of bin so we don't update again
