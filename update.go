@@ -12,17 +12,20 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"time"
 )
 
 var binPath = filepath.Join(AppDir, "heroku-plugins")
 
 func updateIfNeeded() {
-	// TODO: update plugins
 	if !updateNeeded() {
 		return
 	}
+	// TODO: update plugins
 	manifest := getUpdateManifest()
 	if manifest.Version == Version {
+		// Set timestamp of bin so we don't update again
+		os.Chtimes(binPath, time.Now(), time.Now())
 		return
 	}
 	if !updatable() {
@@ -41,8 +44,11 @@ func updateNeeded() bool {
 	if Version == "dev" {
 		return false
 	}
-	// TODO: only update once in a while
-	return true
+	f, err := os.Stat(binPath)
+	if err != nil {
+		must(err)
+	}
+	return f.ModTime().Add(20 * time.Minute).Before(time.Now())
 }
 
 type manifest struct {
