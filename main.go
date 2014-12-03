@@ -30,8 +30,8 @@ func main() {
 		must(node.Setup())
 		Errln("done")
 	}
-	for _, topic := range PluginTopics() {
-		cli.AddTopic(topic)
+	for _, command := range PluginCommands() {
+		cli.AddCommand(command)
 	}
 	ctx, err := cli.Parse(os.Args[1:])
 	if err != nil {

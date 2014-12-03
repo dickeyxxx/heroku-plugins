@@ -9,10 +9,8 @@ var commands = &Topic{
 var commandsRun = &Command{
 	ShortHelp: "list all commands",
 	Run: func(ctx *Context) {
-		for _, topic := range PluginTopics() {
-			for _, command := range topic.Commands {
-				Printf("%s:%s\n", topic.Name, command.Name)
-			}
+		for _, command := range PluginCommands() {
+			Printf("%s:%s\n", command.Topic, command.Name)
 		}
 	},
 }

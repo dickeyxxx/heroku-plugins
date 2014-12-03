@@ -11,11 +11,8 @@ func runFn(module, topic, command string) func(ctx *Context) {
 		must(err)
 		script := fmt.Sprintf(`
 		require('%s')
-		.topics.filter(function (topic) {
-			return topic.name == '%s'
-		})[0]
 		.commands.filter(function (command) {
-			return command.name == '%s'
+			return command.topic == '%s' && command.name == '%s'
 		})[0]
 		.run(%s)`, module, topic, command, ctxJson)
 
@@ -26,30 +23,32 @@ func runFn(module, topic, command string) func(ctx *Context) {
 	}
 }
 
-func getPackageTopics(name string) []*Topic {
+func getPackageCommands(name string) []*Command {
 	script := `console.log(JSON.stringify(require('` + name + `')))`
 	cmd := node.RunScript(script)
 	cmd.Stderr = Stderr
 	output, err := cmd.StdoutPipe()
 	must(err)
 	must(cmd.Start())
-	var response map[string][]*Topic
-	must(json.NewDecoder(output).Decode(&response))
-	must(cmd.Wait())
-	topics := response["topics"]
-	for _, topic := range topics {
-		for _, command := range topic.Commands {
-			command.Run = runFn(name, topic.Name, command.Name)
-		}
+	var response map[string][]*Command
+	err = json.NewDecoder(output).Decode(&response)
+	if err != nil {
+		Errln("Error reading plugin:", name)
+		return nil
 	}
-	return topics
+	must(cmd.Wait())
+	commands := response["commands"]
+	for _, command := range commands {
+		command.Run = runFn(name, command.Topic, command.Name)
+	}
+	return commands
 }
 
-func PluginTopics() (topics []*Topic) {
+func PluginCommands() (commands []*Command) {
 	packages, err := node.Packages()
 	must(err)
 	for _, pkg := range packages {
-		topics = append(topics, getPackageTopics(pkg.Name)...)
+		commands = append(commands, getPackageCommands(pkg.Name)...)
 	}
-	return topics
+	return commands
 }
